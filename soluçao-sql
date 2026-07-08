@@ -1,0 +1,33 @@
+-- SCHEMA:
+
+CREATE TABLE alunos (
+    id_aluno INT PRIMARY KEY,
+    nome_aluno VARCHAR(100),
+    plano_atual VARCHAR(50)
+);
+
+CREATE TABLE frequencia (
+    id_acesso INT PRIMARY KEY,
+    id_aluno INT,
+    data_acesso DATE
+);
+
+INSERT INTO alunos VALUES
+(1, '  carlos SOUZA  ', 'Mensal'),
+(2, 'BEATRIZ lima', NULL),
+(3, '   amanda ROCHA   ', 'Anual');
+
+INSERT INTO frequencia VALUES
+(101, 1, '2026-06-01'),
+(102, 2, '2026-06-01'),
+(103, 1, '2026-06-02'),
+(104, 3, '2026-06-02');
+
+-- SOLUÇÃO:
+
+SELECT 
+data_acesso,
+UPPER(TRIM(nome_aluno)) AS nome_aluno,
+COALESCE(plano_atual, 'Sem plano') AS plano
+FROM frequencia f
+INNER JOIN alunos a ON f.id_aluno = a.id_aluno;
